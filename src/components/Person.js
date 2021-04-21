@@ -1,26 +1,24 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux';
+import { Button, Card, Row, Col } from 'react-bootstrap'
 
 class Person extends Component {
-    componentDidMount(){
-        console.log('Data dari Redux Store');
-        console.log('Data', this.props.data);
-    }
-
     render() {
+        const {name, address, phoneNumber, photo} = this.props
         return (
-            <div className="container">
-                {this.props.children}
-            </div>
+           <Card className="container-fluid p-4 text-center">
+               <Card.Img variant="top" src={photo}/>
+               <Card.Body>
+                   <Card.Title>{name}</Card.Title>
+                   <Card.Text>
+                       <Row className="my-2">
+                            <Col>{address},{phoneNumber}</Col>
+                       </Row>
+                   </Card.Text>
+                   <Button variant="danger">remove</Button>
+               </Card.Body>
+           </Card>
         )
     }
 }
 
-const mapStateToProps = (state) => { // state di sini adalah global state
-    console.log(state);
-    return {
-        data: state.personReducer
-    }
-}
-
-export default connect(mapStateToProps)(Person) // Ini yang menyebabkan store terbaca dari redux
+export default Person
