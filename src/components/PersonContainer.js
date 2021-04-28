@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Row, Col, Container } from 'react-bootstrap'
 import {connect} from 'react-redux'
 import Person from './Person'
+import PersonAPI from '../assets/person'
 
 class PersonContainer extends Component {
     createCard = (personProps) => (
@@ -17,14 +18,24 @@ class PersonContainer extends Component {
     )
 
     componentDidMount(){
-        console.log('Data dari Redux Store');
-        console.log('Data', this.props.data);
+        
+        
+        // Memasukan data dari API ke Redux
+        PersonAPI.all().then(persons => {
+            return this.props.dispatch({
+                type: 'person/INIT',
+                payload: persons
+            })
+        })
+
+        // console.log('Data dari Redux Store');
+        // console.log('Data', this.props.data);
     }
     
     render() {
         const {data}  = this.props
         const contents = []
-        for (let i=0; i<data.length; i++) {
+        for (let i=0; i<data.length; i+=3) {
             contents.push(data.slice(i,i+3))
         }
         return (

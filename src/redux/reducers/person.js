@@ -1,4 +1,4 @@
-import { ADD } from '../actions/person'
+import { ADD, INIT } from '../actions/person'
 
 const initialState = [{
     id: 1,
@@ -9,12 +9,19 @@ const initialState = [{
 }]
 
 const personReducer = (state = initialState, action) => {
+    // console.log(state);
+    // console.log("type", action.type);
+    // console.log("payload", action.payload);
     switch(action.type) {
         case ADD:
-            return [
-                ...state,
-                // action.payload
+            const newData = [
+                ...state
             ]
+            newData.concat(action.payload)
+            return newData.concat(action.payload)
+        case INIT:
+            console.log(action.payload);
+            return action.payload
         default:
             return state
     }
